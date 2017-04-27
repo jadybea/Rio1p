@@ -1,4 +1,4 @@
-#Code for calculation of ribosomal distances relative to either the transcription start site or the stop codon. 
+#Code for calculation of ribosomal distances relative to either the translation start site or the stop codon. 
 
 library(dplyr)
 library(stringr)
@@ -31,7 +31,8 @@ sc <- mutate(sc, stopminusone=round((V4+V5)/2))
 sc <- select(sc, a, stopminusone)
 
 #Part C: Read in a bed file of the aligned reads with an interval corresponding to mDNA coding sequences. 
-#Create separate dataframes with reads on positive or negative strand. Extract the name of the corresponding mRNA and calculate the middle position of the interval. 
+#Create separate dataframes with reads on positive or negative strand. Extract the name of the 
+#corresponding mRNA and calculate the middle position of the interval. 
 inter <- read.delim("D2.bed", header=FALSE)
 pos <- inter[inter$V7=="+",]
 neg <- inter[inter$V7=="-",]
@@ -60,7 +61,8 @@ a <- a[,2]
 
 neg <- cbind(neg, a)
 
-#Part D: Add information about position of transcription start site and calculate distances of ribosome from transcription start site. 
+#Part D: Add information about position of translation start site and calculate distances of ribosome from translation
+#start site. 
 #Combine distances of negative and positive strand-based calculations.
 
 pos<- inner_join(pos, tss)
@@ -73,7 +75,8 @@ write.csv(D2, "D2DistanceFromTSS.csv")
 
 condition1<- c(pos$dist, neg$dist)
 
-#Part E: Part E is an alternative to part D. Add information about position of stop codon and calculate distances of ribosome from stop codon. 
+#Part E: Part E is an alternative to part D. Add information about position of stop codon and calculate distances of ribosome
+#from stop codon. 
 #Combine distances of negative and positive strand-based calculations.
 
 pos <- inner_join(pos, sc)
@@ -87,7 +90,8 @@ write.csv(D2, "D2DistanceFromStopCodon.csv")
 
 condition1<- c(pos$dist, neg$dist)
 
-#Part C combined with either part D or E should be repeated for other bed files corresponding to separate experiments of different conditions. 
+#Part C combined with either part D or E should be repeated for other bed files corresponding to separate experiments of 
+#different conditions. 
 
 #Part D: Plotting a coloured single density plot of ribosomal positions for all conditions. 
 
@@ -105,7 +109,8 @@ ggplot(data, aes(x=dens, colour=lines)) +geom_density() +coord_cartesian(xlim = 
 
 ggplot(data, aes(x=dens, colour=lines)) +geom_density() +coord_cartesian(xlim = c(-1000, 7000)) +xlab("Distance of ribosome from start/stop codon")
 
-#Statistical analysis: I excluded mRNAs of intron-containing genes from the analysis. 329 mRNAs out of 6692 were excluded. (6363 mRNAs were included in cds2.) 
+#Statistical analysis: I excluded mRNAs of intron-containing genes from the analysis. 329 mRNAs out of 6692 were excluded. 
+#(6363 mRNAs were included in cds2.) 
 #Minimal length of mRNA=47. In cds3, all transcripts shorter than 300 from cds2 were excluded.
 cds <- read.csv("cds.csv")
 cds2 <- cds[duplicated(cds$a),]
