@@ -103,11 +103,11 @@ fac <- c(a,b,c, d)
 all <- c(condition1, condition2, condition3, condition4)
 data <-data.frame(dens=all, lines=fac)
 
-ggplot(data, aes(x=dens, colour=lines)) +geom_density() +coord_cartesian(xlim = c(-1000, 7000)) +xlab("Distance of ribosome from start/stop codon")
+ggplot(data, aes(x=dens, colour=lines)) +geom_density() +coord_cartesian(xlim = c(-300, 3700)) +xlab("Distance of ribosome from start/stop codon")
 
 #Alternatively, a black and white density plot can be plot.  
 
-ggplot(data, aes(x=dens, colour=lines)) +geom_density() +coord_cartesian(xlim = c(-1000, 7000)) +xlab("Distance of ribosome from start/stop codon")
+ggplot(data, aes(x=dens, linetype=lines)) +geom_density() +coord_cartesian(xlim = c(-300, 3700)) +xlab("Distance of ribosome from start/stop codon")
 
 #Statistical analysis: I excluded mRNAs of intron-containing genes from the analysis. 329 mRNAs out of 6692 were excluded. 
 #(6363 mRNAs were included in cds2.) 
